@@ -7,12 +7,17 @@ use App\Trait\DateEntityTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
 #[ORM\Entity(repositoryClass: UtilisateurRepository::class)]
-class Utilisateur
+class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
 {
     use DateEntityTrait;
 
+    //#[ORM\Column(type: 'json')]
+    private array $roles = [];
+    
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -78,6 +83,12 @@ class Utilisateur
         return $this;
     }
 
+    // Added method for PasswordAuthenticatedUserInterface
+    public function getPassword(): ?string
+    {
+        return $this->getMotDePasse();
+    }
+
     /**
      * @return Collection<int, Article>
      */
@@ -122,10 +133,7 @@ class Utilisateur
             $this->commentaires->add($commentaire);
             $commentaire->setCommentateur($this);
         }
-
-        return $this;
     }
-
     public function removeCommentaire(Commentaire $commentaire): static
     {
         if ($this->commentaires->removeElement($commentaire)) {
@@ -136,5 +144,28 @@ class Utilisateur
         }
 
         return $this;
+    }
+
+    public function getRoles(): array
+    {
+        $roles = $this->roles;
+        $roles[] = 'ROLE_USER';
+        return array_unique($roles);
+    }
+
+    public function setRoles(array $roles): static
+    {
+        $this->roles = $roles;
+        return $this;
+    }
+
+    public function eraseCredentials(): void
+    {
+        // If you store any temporary, sensitive data on the user, clear it here
+    }
+
+    public function getUserIdentifier(): string
+    {
+        return $this->pseudo;
     }
 }

@@ -29,12 +29,12 @@ trait DateEntityTrait
 
     public function getDateModification(): ?\DateTimeInterface
     {
-        return $this->dateCreation;
+        return $this->dateModification;
     }
 
-    public function setDateModification(\DateTimeInterface $dateCreation): static
+    public function setDateModification(\DateTimeInterface $dateModification): static
     {
-        $this->dateCreation = $dateCreation;
+        $this->dateModification = $dateModification;
 
         return $this;
     }
