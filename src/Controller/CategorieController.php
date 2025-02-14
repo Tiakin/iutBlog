@@ -30,6 +30,8 @@ final class CategorieController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $categorie->setDateCreation(new \DateTime());
+            $categorie->setDateModification(new \DateTime());
             $entityManager->persist($categorie);
             $entityManager->flush();
 
@@ -57,6 +59,9 @@ final class CategorieController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $categorie->setDateCreation(new \DateTime());
+            $categorie->setDateModification(new \DateTime());
+            $entityManager->persist($categorie);
             $entityManager->flush();
 
             return $this->redirectToRoute('app_categorie_index', [], Response::HTTP_SEE_OTHER);

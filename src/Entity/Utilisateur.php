@@ -7,10 +7,12 @@ use App\Trait\DateEntityTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
 #[ORM\Entity(repositoryClass: UtilisateurRepository::class)]
+#[UniqueEntity(fields: ['pseudo'], message: 'There is already an account with this pseudo')]
 class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
 {
     use DateEntityTrait;
@@ -83,7 +85,6 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    // Added method for PasswordAuthenticatedUserInterface
     public function getPassword(): ?string
     {
         return $this->getMotDePasse();

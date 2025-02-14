@@ -15,17 +15,6 @@ class CategorieType extends AbstractType
     {
         $builder
             ->add('nom')
-            ->add('dateCreation', null, [
-                'widget' => 'single_text',
-            ])
-            ->add('dateModification', null, [
-                'widget' => 'single_text',
-            ])
-            ->add('articles', EntityType::class, [
-                'class' => Article::class,
-                'choice_label' => 'id',
-                'multiple' => true,
-            ])
         ;
     }
 

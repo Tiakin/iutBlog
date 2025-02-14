@@ -31,6 +31,36 @@
                 <th>DateModification</th>
                 <td>{{ article.dateModification ? article.dateModification|date('Y-m-d H:i:s') : '' }}</td>
             </tr>
+            <tr>
+                <th>Catégories</th>
+                <td>
+                    <ul>
+                        {% for categorie in article.categories %}
+                            <li>{{ categorie.nom }}</li>
+                        {% else %}
+                            <li>Pas de categories</li>
+                        {% endfor %}
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th>Commentaires</th>
+                <td>
+                    <ul>
+                        {% for com in article.commentaires %}
+                            <li>{{ com.nom }}</li>
+                        {% else %}
+                            <li>Pas de commentaires</li>
+                        {% endfor %}
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th>Ajouter un commentaire</th>
+                <td colspan="2">
+                    {{ include('commentaire/_form.html.twig'), {'form': formAddCommentaire} }}
+                </td>
+            </tr>
         </tbody>
     </table>
 
